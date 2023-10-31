@@ -17,6 +17,7 @@ struct Dme07: Driver
     std::map<std::string, float> ret_val{};
 
     add_to_map(ret_val, "total_water_m3", this->get_0413(telegram));
+    add_to_map(ret_val, "current_alarms", this->get_02FD17(telegram));
 
     if (ret_val.size() > 0) {
       return ret_val;

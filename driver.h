@@ -306,6 +306,24 @@ protected:
     return ret_val;
   };
 
+  esphome::optional<float> get_02FD17(std::vector<unsigned char> &telegram) {
+    esphome::optional<float> ret_val{};
+    uint32_t err_code = 0;
+    size_t i = 11;
+    uint32_t total_register = 0x02FD17;
+    while (i < telegram.size()) {
+      uint32_t c = (((uint32_t)telegram[i+0] << 16) | ((uint32_t)telegram[i+1] << 8) | ((uint32_t)telegram[i+2]));
+      if (c == total_register) {
+        i += 3;
+        err_code = ((uint32_t)telegram[i+1] << 8)  | ((uint32_t)telegram[i+0]);
+        ret_val = err_code;
+        break;
+      }
+      i++;
+    }
+    return ret_val;
+  };
+
 private:
   Driver();
   std::string driver_type_;
